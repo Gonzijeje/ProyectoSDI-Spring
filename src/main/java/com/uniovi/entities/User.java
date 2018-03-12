@@ -4,26 +4,24 @@ import javax.persistence.*;
 
 @Entity
 public class User {
-
-	@Id
-	@GeneratedValue
-	private long id;
-	@Column(unique=true)
-	private String email;
-	private String name;	
-	private String password;
-	@Transient //propiedad que no se almacena e la tabla.
-	private String passwordConfirm;
 	
+	@Id @GeneratedValue private long id;
+	@Column(unique = true)
+	private String email;
+	private String name;
+
+	private String password;
+	@Transient // propiedad que no se almacena e la tabla.
+	private String passwordConfirm;
+
 	public User(String email, String name, String password) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.password = password;
 	}
-	
+
 	public User() {
-		
 	}
 
 	public long getId() {
@@ -65,6 +63,9 @@ public class User {
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 	}
+
 	
+
 	
+
 }
