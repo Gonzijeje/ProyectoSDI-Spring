@@ -55,10 +55,7 @@ public class UsersControllers {
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model, @RequestParam(value = "sdi", required=false) String nombre) {
-		/*if(nombre.equals("caca")) {
-			System.out.println("FUNCIONA");
-		}*/
+	public String login(Model model) {
 		return "login";
 	}
 	
