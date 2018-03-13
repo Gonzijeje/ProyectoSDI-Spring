@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
@@ -51,6 +52,14 @@ public class UsersControllers {
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model, @RequestParam(value = "sdi", required=false) String nombre) {
+		/*if(nombre.equals("caca")) {
+			System.out.println("FUNCIONA");
+		}*/
+		return "login";
 	}
 	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET) 
