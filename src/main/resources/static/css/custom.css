@@ -21,4 +21,8 @@ footer {
   line-height:60px
 }
 
+#errorLogin {
+	text-align: center;
+}
+
 /* Sticky footer styles-------------------------------------------------- */
