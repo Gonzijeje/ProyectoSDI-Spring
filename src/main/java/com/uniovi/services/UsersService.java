@@ -1,8 +1,11 @@
 package com.uniovi.services;
+import java.util.LinkedList;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,5 +47,13 @@ public class UsersService {
 	public User getUserByEmail(String email) {
 		return usersRepository.findByEmail(email);
 	}
+	
+	public Page<User> searchUserByNameOrEmail(Pageable pageable, String searchText){
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		searchText = "%"+searchText+"%";
+		users = usersRepository.searchByNameOrEmail(pageable, searchText);
+		return users;
+	}
+	
 
 }

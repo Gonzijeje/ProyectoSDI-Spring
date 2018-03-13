@@ -10,6 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.SecurityService;
@@ -58,10 +59,17 @@ public class UsersControllers {
 		return "home"; 
 	}
 	
-	@RequestMapping("/user/list" )
-	public String getListado(Model model, Pageable pageable){
+	@RequestMapping("/user/list")
+	public String getListado(Model model, Pageable pageable,
+			@RequestParam(value = "", required=false) String searchText){
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		users = usersService.getUsers(pageable);
+		if(searchText != null && !searchText.isEmpty()) {
+			users = usersService.searchUserByNameOrEmail(pageable, searchText);
+		}
+		else
+		{
+			users = usersService.getUsers(pageable);
+		}
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "user/list";
