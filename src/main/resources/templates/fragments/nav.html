@@ -18,18 +18,23 @@
 			</ul>
 		
 			<ul class="nav navbar-nav navbar-right">
-				<li>
+				<li sec:authorize="!isAuthenticated()">
 					<a href="/signup">
 						<span class="glyphicon glyphicon-user"></span>
 						Registrate
 					</a>
 				</li>
-				<li>
+				<li sec:authorize="!isAuthenticated()">
 					<a href="/login">
 						<span class="glyphicon glyphicon-log-in"></span>
-						Identifícate
+						Identificate
 					</a>
 				</li>
+				<li sec:authorize="isAuthenticated()">
+					<a href="/logout"> 
+						<span class="glyphicon glyphicon-log-out"></span>
+						Desconectar
+				</a></li>
 			</ul>
 		</div>
 	</div> 

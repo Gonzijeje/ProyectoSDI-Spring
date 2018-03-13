@@ -54,6 +54,14 @@ public class UsersControllers {
 		return "redirect:home";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String login(Model model, @RequestParam(value = "sdi", required=false) String nombre) {
+		/*if(nombre.equals("caca")) {
+			System.out.println("FUNCIONA");
+		}*/
+		return "login";
+	}
+	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET) 
 	public String home(Model model) { 
 		return "home"; 
