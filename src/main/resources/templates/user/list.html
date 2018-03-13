@@ -5,21 +5,21 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Usuarios de la red social</h2>
+		<h2 th:text="#{userListH2.message}">Usuarios de la Red Social</h2>
 		<form class="navbar-form" action="/user/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
 				placeholder="Buscar por nombre o email del usuario">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button type="submit" class="btn btn-default" th:text="#{userListSearchBotton.message}">Buscar</button>
 		</form>
-		<p>Los usuarios que actualmente figuran en la red social son los
+		<p th:text="#{userListP.message}">Los usuarios de la red social son los
 			siguientes:</p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Nombre</th>
+						<th th:text="#{userListNameColumn.message}">Nombre</th>
 						<th>Email</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
