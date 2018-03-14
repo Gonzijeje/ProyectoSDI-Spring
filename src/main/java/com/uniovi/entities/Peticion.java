@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Peticion {
 	
-	@Id @GeneratedValue private long id;
+	@Id @GeneratedValue public long id;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_envia")

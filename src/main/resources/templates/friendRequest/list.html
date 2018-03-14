@@ -25,6 +25,11 @@
 				<tbody>
 					<tr th:each="fr : ${friendRequestsList}">
 						<td th:text="${fr.userEnvia.name}">Nombre del usuario</td>
+						<td><div>
+								<div>
+									<a th:href="${'/friendRequest/' + fr.id + '/accept'}">Aceptar petición</a>
+								</div>
+							</div></td>
 					</tr>
 				</tbody>
 			</table>

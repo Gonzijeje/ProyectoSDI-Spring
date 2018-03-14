@@ -109,5 +109,15 @@ public class UsersControllers {
 		peticionService.addPeticion(new Peticion(userEnvia,userRecibe,false));
 		return "redirect:/user/list";
 	}
+	
+	@RequestMapping(value="/friendRequest/{id}/accept", method=RequestMethod.GET)
+	public String acceptFriendRequest(Model model, @PathVariable Long id) {
+		Peticion pa = peticionService.getPeticion(id);
+		User userEnvia = pa.getUserEnvia();
+		pa.getUserRecibe().getAmigos().add(userEnvia);
+		pa.getUserEnvia().getPeticionesEnviadas().remove(pa);
+		pa.getUserRecibe().getPeticionesRecibidas().remove(pa);
+		return "redirect:/friendRequest/list";
+	}
 
 }

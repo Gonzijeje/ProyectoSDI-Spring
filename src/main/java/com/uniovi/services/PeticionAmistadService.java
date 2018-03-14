@@ -24,6 +24,10 @@ public class PeticionAmistadService {
 		peticionRepository.save(peticion);
 	}
 	
+	public Peticion getPeticion(Long id) {
+		return peticionRepository.findOne(id);
+	}
+	
 	public Page<Peticion> getFriendRequestsByUserEnvia(Pageable pageable, String email){
 		return peticionRepository.findRequestByUserEnvia(pageable, email);
 	}

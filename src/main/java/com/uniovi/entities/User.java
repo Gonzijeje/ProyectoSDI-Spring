@@ -23,7 +23,9 @@ public class User {
 	@OneToMany(mappedBy = "userRecibe", cascade = CascadeType.ALL)
 	private Set<Peticion> peticionesRecibidas = new HashSet<Peticion>();
 
-	//private Set<User> amigos = new HashSet<User>();
+	@ManyToMany(cascade = {CascadeType.ALL })
+	@JoinTable(name = "amigos", joinColumns = @JoinColumn(name = "amigo_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private Set<User> amigos = new HashSet<User>();
 	
 
 	public User(String email, String name, String password) {
@@ -92,12 +94,12 @@ public class User {
 		this.peticionesRecibidas = peticionesRecibidas;
 	}
 
-	/*public Set<User> getAmigos() {
+	public Set<User> getAmigos() {
 		return amigos;
 	}
 
 	public void setAmigos(Set<User> amigos) {
 		this.amigos = amigos;
-	}*/
+	}
 	
 }
