@@ -32,6 +32,14 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.email}">Email del usuario</td>
+						<td><div>
+							<div th:if="${user.recibida}">
+								<a th:href="${'/user/' + user.id + '/noresend'}">Reenviar</a>
+							</div>
+							<div th:unless="${user.recibida}">
+								<a th:href="${'/user/' + user.id + '/resend'}">No reenviar</a>
+							</div>
+							</div></td>
 					</tr>
 				</tbody>
 			</table>

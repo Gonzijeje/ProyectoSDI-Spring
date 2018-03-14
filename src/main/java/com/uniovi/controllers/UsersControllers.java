@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,6 +79,17 @@ public class UsersControllers {
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "user/list";
+	}
+	
+	@RequestMapping(value="/user/{id}/resend", method=RequestMethod.GET)
+	public String setResendTrue(Model model, @PathVariable Long id){
+		usersService.setUserRecibida(true, id);
+		return "redirect:/user/list";
+	}
+	@RequestMapping(value="/user/{id}/noresend", method=RequestMethod.GET)
+	public String setResendFalse(Model model, @PathVariable Long id){
+		usersService.setUserRecibida(false, id);
+		return "redirect:/user/list";
 	}
 
 }

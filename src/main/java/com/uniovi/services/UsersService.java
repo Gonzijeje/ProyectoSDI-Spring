@@ -55,5 +55,9 @@ public class UsersService {
 		return users;
 	}
 	
+	public void setUserRecibida(boolean revised,Long id){
+		usersRepository.updateResend(revised, id);
+	}
+	
 
 }
