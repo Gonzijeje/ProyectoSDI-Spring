@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.uniovi.entities.Peticion;
 import com.uniovi.entities.User;
+import com.uniovi.services.PeticionAmistadService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -21,6 +23,8 @@ import com.uniovi.validators.SignUpFormValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 
 @Controller
@@ -34,6 +38,9 @@ public class UsersControllers {
 	
 	@Autowired 
 	private SecurityService securityService;
+	
+	@Autowired
+	private PeticionAmistadService peticionService;
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -81,14 +88,25 @@ public class UsersControllers {
 		return "user/list";
 	}
 	
-	@RequestMapping(value="/user/{id}/resend", method=RequestMethod.GET)
-	public String setResendTrue(Model model, @PathVariable Long id){
-		usersService.setUserRecibida(true, id);
-		return "redirect:/user/list";
+	@RequestMapping("/friendRequest/list")
+	public String getFriendRequests(Model model, Pageable pageable){
+		Page<Peticion> fr = new PageImpl<Peticion>(new LinkedList<Peticion>());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User userEnvia = usersService.getUserByEmail(auth.getName());
+		fr=peticionService.getFriendRequestsByUserEnvia(pageable, auth.getName());
+		
+		model.addAttribute("friendRequestsList", fr.getContent());
+		model.addAttribute("page", fr);
+		return "/friendRequest/list";
 	}
-	@RequestMapping(value="/user/{id}/noresend", method=RequestMethod.GET)
-	public String setResendFalse(Model model, @PathVariable Long id){
-		usersService.setUserRecibida(false, id);
+	
+	@RequestMapping(value="/user/{id}/send", method=RequestMethod.GET)
+	public String sendFriendRequest(Model model, @PathVariable Long id){
+		User userRecibe = usersService.getUser(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User userEnvia = usersService.getUserByEmail(auth.getName());
+		
+		peticionService.addPeticion(new Peticion(userEnvia,userRecibe,false));
 		return "redirect:/user/list";
 	}
 

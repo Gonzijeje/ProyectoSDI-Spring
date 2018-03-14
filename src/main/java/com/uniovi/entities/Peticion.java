@@ -6,23 +6,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-/*@Entity
-public class PeticionAmistad {
+@Entity
+public class Peticion {
 	
 	@Id @GeneratedValue private long id;
 	
+	@ManyToOne
+	@JoinColumn(name = "user_envia")
 	private User userEnvia;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_recibe")
 	private User userRecibe;
+	
 	private boolean aceptada; //True(aceptada)
 	
-	public PeticionAmistad(User envia,User recibe,boolean estado) {
+	public Peticion(User envia,User recibe,boolean estado) {
 		super();
 		this.userEnvia=envia;
 		this.userRecibe=recibe;
 		this.aceptada=estado;
 	}
 
-	public PeticionAmistad() {	
+	public Peticion() {	
 	}	
 
 	public User getUserEnvia() {
@@ -49,9 +55,5 @@ public class PeticionAmistad {
 		this.aceptada = estado;
 	}
 
-	public void acceptFriendRequest() {
-		userRecibe.getFriends().add(userEnvia);
-		userRecibe.getFriendRequests().remove(this);
-	}
+}
 
-}*/

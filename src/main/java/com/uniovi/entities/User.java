@@ -14,24 +14,23 @@ public class User {
 	private String name;
 
 	private String password;
-	@Transient // propiedad que no se almacena e la tabla.
+	@Transient
 	private String passwordConfirm;
 
-	@ManyToMany(cascade = {CascadeType.ALL })
-	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "friend_id"),
-		inverseJoinColumns = @JoinColumn(name = "user_id"))
-	private Set<User> friends = new HashSet<User>();
-
-	//private Set<PeticionAmistad> friendRequests = new HashSet<PeticionAmistad>();
+	@OneToMany(mappedBy = "userEnvia", cascade = CascadeType.ALL)
+	private Set<Peticion> peticionesEnviadas = new HashSet<Peticion>();
 	
-	private boolean recibida;
+	@OneToMany(mappedBy = "userRecibe", cascade = CascadeType.ALL)
+	private Set<Peticion> peticionesRecibidas = new HashSet<Peticion>();
+
+	//private Set<User> amigos = new HashSet<User>();
+	
 
 	public User(String email, String name, String password) {
 		super();
 		this.email = email;
 		this.name = name;
 		this.password = password;
-		this.recibida=false;
 	}
 
 	public User() {
@@ -77,29 +76,28 @@ public class User {
 		this.passwordConfirm = passwordConfirm;
 	}
 
-	public Set<User> getFriends() {
-		return friends;
+	public Set<Peticion> getPeticionesEnviadas() {
+		return peticionesEnviadas;
 	}
-	
-	public void setFriends(Set<User> amigos) {
-		this.friends = amigos;
+
+	public void setPeticionesEnviadas(Set<Peticion> peticionesEnviadas) {
+		this.peticionesEnviadas = peticionesEnviadas;
 	}
-	
-	/*public Set<PeticionAmistad> getFriendRequests() {
-		return friendRequests;
+
+	public Set<Peticion> getPeticionesRecibidas() {
+		return peticionesRecibidas;
 	}
-	
-	public void setFriendRequests(Set<PeticionAmistad> peticiones) {
-		this.friendRequests = peticiones;
+
+	public void setPeticionesRecibidas(Set<Peticion> peticionesRecibidas) {
+		this.peticionesRecibidas = peticionesRecibidas;
+	}
+
+	/*public Set<User> getAmigos() {
+		return amigos;
+	}
+
+	public void setAmigos(Set<User> amigos) {
+		this.amigos = amigos;
 	}*/
-
-	public boolean isRecibida() {
-		return recibida;
-	}
-
-	public void setRecibida(boolean recibida) {
-		this.recibida = recibida;
-	}
 	
-
 }
