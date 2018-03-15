@@ -6,6 +6,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +61,24 @@ public class UsersService {
 		users = usersRepository.searchByNameOrEmail(pageable, searchText);
 		return users;
 	}
+	
+
+	/**
+	 * Comprueba que no si se cambia el id en la url
+	 * solo se muestre aquellas publicaciones de las que es usuario amigo
+	 * @param revised
+	 * @param id
+	 */
+//	public void usuarioAmigo(boolean revised,Long id){
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String email = auth.getName();
+//		
+//		User user = usersRepository.findOne(id);
+//		
+//		if( mark.getUser().getDni().equals(dni) ) {
+//			marksRepository.updateResend(revised, id);
+//		}
+//	}
 	
 
 }

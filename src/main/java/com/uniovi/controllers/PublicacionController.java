@@ -62,14 +62,13 @@ public class PublicacionController {
 		return "publicacion/list";
 	}
 	
-	@RequestMapping(value="/publicacionFriend/{id}/list", method=RequestMethod.GET)
+	@RequestMapping(value="publicacionFriend/{id}", method=RequestMethod.GET)
 	public String sendFriendRequest(Model model, @PathVariable Long id){
 		User amigo = usersService.getUser(id);
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User userEnvia = usersService.getUserByEmail(auth.getName());
-		
-		peticionService.addPeticion(new Peticion(userEnvia,userRecibe,false));
-		return "redirect:/user/list";
+		List<Publicacion> publicaciones = new ArrayList<Publicacion>();
+		publicaciones = publicacionService.getPublicaciones(amigo.getEmail());
+		model.addAttribute("listFriends", publicaciones);
+		return "user/publicacionFriend";
 	}
 
 }

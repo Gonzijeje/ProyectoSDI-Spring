@@ -104,5 +104,14 @@ public class User {
 	public void setAmigos(Set<User> amigos) {
 		this.amigos = amigos;
 	}
+
+	public Set<Publicacion> getPublicaciones() {
+		return publicaciones;
+	}
+
+	public void setPublicaciones(Set<Publicacion> publicaciones) {
+		this.publicaciones = publicaciones;
+	}
+	
 	
 }

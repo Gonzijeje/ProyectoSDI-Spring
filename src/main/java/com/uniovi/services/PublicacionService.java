@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Publicacion;
@@ -27,5 +28,6 @@ public class PublicacionService {
 	public List<Publicacion> getPublicaciones(String email){
 		return publicacionRepository.findPublicacionByUser(email);
 	}
+	
 
 }
