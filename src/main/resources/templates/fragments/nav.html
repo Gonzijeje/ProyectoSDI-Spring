@@ -13,7 +13,17 @@
 		<div class="collapse navbar-collapse" id="myNavbar">	
 			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
 				<li><a href="/">Home</a></li>
-				<li><a href="/user/list" th:text="#{showUsers.message}">Mostrar Usuarios</a></li>
+				
+				<li id="users-menu" class="dropdown" >
+					<a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" th:text="#{userManagement.message}"> Gestión de Usuarios <span
+						class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/user/list" th:text="#{showUsers.message}">Mostrar Usuarios</a></li>
+						<li><a href="/user/listFriends" th:text="#{showUsersFriends.message}">Mostrar Usuarios Amigos</a></li>
+					</ul>
+				</li>
 				<li><a href="/friendRequest/list" >Ver peticiones de amistad</a></li>
 			</ul>
 		

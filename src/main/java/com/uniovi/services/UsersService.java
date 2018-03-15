@@ -31,6 +31,11 @@ public class UsersService {
 		return users;
 	}
 	
+	public Page<User> getUsersFriends(Pageable pageable, String email){
+		Page<User> users = usersRepository.findUsersFriendsByEmail(pageable, email);
+		return users;
+	}
+	
 	public User getUser(Long id) {
 		return usersRepository.findOne(id);
 	}

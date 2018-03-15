@@ -88,6 +88,20 @@ public class UsersControllers {
 		return "user/list";
 	}
 	
+	@RequestMapping("/user/listFriends")
+	public String getListadoAmigos(Model model, Pageable pageable){
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User activeUser = usersService.getUserByEmail(auth.getName());
+		
+		users = usersService.getUsersFriends(pageable, activeUser.getEmail());
+		
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "user/listFriends";
+	}
+	
 	@RequestMapping("/friendRequest/list")
 	public String getFriendRequests(Model model, Pageable pageable){
 		Page<Peticion> fr = new PageImpl<Peticion>(new LinkedList<Peticion>());
