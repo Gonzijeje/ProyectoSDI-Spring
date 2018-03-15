@@ -54,6 +54,9 @@ public class InsertSampleDataService {
 		User user18 = new User("Fran@uniovi.es", "Francisco", "123456");
 		user6.setPassword("123456");
 		
+		user1.getAmigos().add(user2);
+		user2.getAmigos().add(user1);
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
@@ -72,6 +75,11 @@ public class InsertSampleDataService {
 		usersService.addUser(user16);
 		usersService.addUser(user17);
 		usersService.addUser(user18);
+		
+		for(User u:user1.getAmigos()) {
+			System.out.println(u.getEmail());
+		}
+		
 	}
 
 }

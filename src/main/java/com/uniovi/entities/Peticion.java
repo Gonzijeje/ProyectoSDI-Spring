@@ -54,6 +54,11 @@ public class Peticion {
 	public void setAceptada(boolean estado) {
 		this.aceptada = estado;
 	}
+	
+	public void accept() {
+		userEnvia.getAmigos().add(userRecibe);
+		userRecibe.getAmigos().add(userEnvia);
+	}
 
 }
 

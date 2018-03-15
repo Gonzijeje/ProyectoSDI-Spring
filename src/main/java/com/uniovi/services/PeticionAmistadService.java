@@ -24,6 +24,10 @@ public class PeticionAmistadService {
 		peticionRepository.save(peticion);
 	}
 	
+	public void deletePeticion(Long id) {
+		peticionRepository.delete(id);
+	}
+	
 	public Peticion getPeticion(Long id) {
 		return peticionRepository.findOne(id);
 	}

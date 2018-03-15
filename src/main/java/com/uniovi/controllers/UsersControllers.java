@@ -114,9 +114,9 @@ public class UsersControllers {
 	public String acceptFriendRequest(Model model, @PathVariable Long id) {
 		Peticion pa = peticionService.getPeticion(id);
 		User userEnvia = pa.getUserEnvia();
-		pa.getUserRecibe().getAmigos().add(userEnvia);
-		pa.getUserEnvia().getPeticionesEnviadas().remove(pa);
-		pa.getUserRecibe().getPeticionesRecibidas().remove(pa);
+		//pa.getUserRecibe().getAmigos().add(userEnvia);
+		pa.accept();
+		peticionService.deletePeticion(id);
 		return "redirect:/friendRequest/list";
 	}
 
