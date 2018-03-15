@@ -22,6 +22,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "userRecibe", cascade = CascadeType.ALL)
 	private Set<Peticion> peticionesRecibidas = new HashSet<Peticion>();
+	
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Publicacion> publicaciones = new HashSet<Publicacion>();
 
 	@ManyToMany(cascade = {CascadeType.ALL })
 	@JoinTable(name = "amigos", joinColumns = @JoinColumn(name = "amigo_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
