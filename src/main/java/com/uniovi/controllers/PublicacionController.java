@@ -1,5 +1,9 @@
 package com.uniovi.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -7,9 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Peticion;
 import com.uniovi.entities.Publicacion;
 import com.uniovi.entities.User;
 import com.uniovi.services.PublicacionService;
@@ -36,7 +42,7 @@ public class PublicacionController {
 		}
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = usersService.getUserByEmail(auth.getName());
-		publicacion.setUser(user);
+		publicacion.setUser(user); publicacion.setFecha(new Date());
 		publicacionService.addPublicacion(publicacion);
 		return "redirect:/user/list";
 	}
@@ -45,6 +51,25 @@ public class PublicacionController {
 	public String getPublicacion(Model model){
 		model.addAttribute("publicacion", new Publicacion());
 		return "publicacion/add";
+	}
+	
+	@RequestMapping("/publicacion/list")
+	public String getListado(Model model){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		List<Publicacion> publicaciones = new ArrayList<Publicacion>();
+		publicaciones = publicacionService.getPublicaciones(auth.getName());		
+		model.addAttribute("publicacionesList", publicaciones);
+		return "publicacion/list";
+	}
+	
+	@RequestMapping(value="/publicacionFriend/{id}/list", method=RequestMethod.GET)
+	public String sendFriendRequest(Model model, @PathVariable Long id){
+		User amigo = usersService.getUser(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User userEnvia = usersService.getUserByEmail(auth.getName());
+		
+		peticionService.addPeticion(new Peticion(userEnvia,userRecibe,false));
+		return "redirect:/user/list";
 	}
 
 }

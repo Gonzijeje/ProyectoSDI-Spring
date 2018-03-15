@@ -24,8 +24,17 @@
 						<li><a href="/user/listFriends" th:text="#{showUsersFriends.message}">Mostrar Usuarios Amigos</a></li>
 					</ul>
 				</li>
+				<li id="publications-menu" class="dropdown" >
+					<a class="dropdown-toggle"
+					data-toggle="dropdown" href="#"> Gestión de Publicaciones <span
+						class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="/publicacion/add">Crear publicación</a></li>
+						<li><a href="/publicacion/list">Mostrar Publicaciones</a></li>
+					</ul>
+				</li>
 				<li><a href="/friendRequest/list" >Ver peticiones de amistad</a></li>
-				<li><a href="/publicacion/add" >Crear publicación</a></li>
 			</ul>
 		
 			<ul class="nav navbar-nav navbar-right">

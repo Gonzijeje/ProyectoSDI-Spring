@@ -5,15 +5,16 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Tus amigos:</h2>
-		<p>Los usuarios amigos de la red social son los
-			siguientes:</p>
+		<h2>Listado de Publicaciones</h2>
+		<form class="navbar-form" action="/publicacion/list">
+		</form>
+		<p>Estas son tus publicaciones:</p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th th:text="#{userListNameColumn.message}">Nombre</th>
-						<th>Email</th>
+						<th>Título</th>
+						<th>Fecha</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -22,14 +23,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${usersList}">
-						<td th:href="${'/publicacionFriend/' + user.id + '/list}" th:text="${user.name}" >Nombre del usuario</td>
-						<td th:text="${user.email}">Email del usuario</td>
+					<tr th:each="p : ${publicacionesList}">
+						<td th:text="${p.titulo}">Titulo de la publicacion</td>
+						<td th:text="${p.fecha}">Fecha de la publicacion</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<footer th:replace="fragments/pagination"/>
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>
