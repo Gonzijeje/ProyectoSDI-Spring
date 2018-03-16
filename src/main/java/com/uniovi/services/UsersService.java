@@ -69,16 +69,18 @@ public class UsersService {
 	 * @param revised
 	 * @param id
 	 */
-//	public void usuarioAmigo(boolean revised,Long id){
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String email = auth.getName();
-//		
-//		User user = usersRepository.findOne(id);
-//		
-//		if( mark.getUser().getDni().equals(dni) ) {
-//			marksRepository.updateResend(revised, id);
-//		}
-//	}
+	public User usuarioAmigo(Long id){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		
+		User userAutenticado = usersRepository.findByEmail(email);
+		User userAmigo = usersRepository.findOne(id);
+		
+		if(userAutenticado.getAmigos().contains(userAmigo)) {
+			return userAmigo;
+		}
+		return null;
+	}
 	
 
 }

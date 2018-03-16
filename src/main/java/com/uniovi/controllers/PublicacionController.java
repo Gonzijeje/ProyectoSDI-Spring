@@ -64,11 +64,14 @@ public class PublicacionController {
 	
 	@RequestMapping(value="publicacionFriend/{id}", method=RequestMethod.GET)
 	public String sendFriendRequest(Model model, @PathVariable Long id){
-		User amigo = usersService.getUser(id);
-		List<Publicacion> publicaciones = new ArrayList<Publicacion>();
-		publicaciones = publicacionService.getPublicaciones(amigo.getEmail());
-		model.addAttribute("listFriends", publicaciones);
-		return "user/publicacionFriend";
+		User amigo = usersService.usuarioAmigo(id);
+		if(amigo != null) {
+			List<Publicacion> publicaciones = new ArrayList<Publicacion>();
+			publicaciones = publicacionService.getPublicaciones(amigo.getEmail());
+			model.addAttribute("listFriends", publicaciones);
+			return "user/publicacionFriend";
+		}
+		return "redirect:/user/listFriends";
 	}
 
 }

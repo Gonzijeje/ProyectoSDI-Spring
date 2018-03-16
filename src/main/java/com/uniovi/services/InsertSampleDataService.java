@@ -101,6 +101,11 @@ public class InsertSampleDataService {
 				+ "dsfvvv fvs dvd"
 				+ "nsjdc sd.kjcbsd njsndcb sdcdsv cv dv ", new Date(), user5));
 		
+		user6.getPublicaciones().add(new Publicacion("ASR", "AsifnffkjsadFSASFASDFASFSDASDFbsadckjbsadc sdklcj sdc "
+				+ "asvvavasdvasdvasdvasdvasdvasdvsdv adv "
+				+ "dsfvvv fvs dvd"
+				+ "nsjdc sd.kjcbsd njsndcb sdcdsv cv dv ", new Date(), user6));
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
