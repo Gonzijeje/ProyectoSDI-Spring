@@ -16,7 +16,8 @@
 		<p th:text="#{userListP.message}">Los usuarios de la red social son los
 			siguientes:</p>
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<table class="table table-hover" th:fragment="tableUsers"
+				id="tableUsers">
 				<thead>
 					<tr>
 						<th th:text="#{userListNameColumn.message}">Nombre</th>
@@ -32,11 +33,29 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.email}">Email del usuario</td>
-						<td><div>
+						<td sec:authorize="hasRole('ROLE_USER')"><div>
 							<div>
 								<a th:href="${'/user/' + user.id + '/send'}">Agregar amigo</a>
 							</div>						
 							</div></td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<div>
+							<div>
+								<button type="button" th:id="${'deleteButton' + user.id}" class="btn btn-info">Eliminar</button>
+								<script th:inline="javascript">
+									/*<![CDATA[*/
+									$( "#deleteButton[[${user.id}]]" ).click(function() {
+										$.get( "/user/delete/[[${user.id}]]", function( data ) {
+											var urlUpdate = '/user/list/update';
+											$("#tableUsers").load(urlUpdate);
+										});
+									});
+									/*]]>*/
+								</script>
+								
+							</div>						
+							</div>
+						</td>
 					</tr>
 				</tbody>
 			</table>

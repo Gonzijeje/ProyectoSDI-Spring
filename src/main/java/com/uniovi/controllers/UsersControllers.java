@@ -1,6 +1,9 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -93,6 +96,12 @@ public class UsersControllers {
 		}
 			
 	}
+
+	@RequestMapping("/user/delete/{id}")
+	public String deleteMark(@PathVariable Long id) {
+		usersService.deleteUser(id);
+		return "redirect:/user/list";
+	}
 	
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
@@ -156,6 +165,11 @@ public class UsersControllers {
 		return "redirect:/friendRequest/list";
 	}
 	
-	
+	@RequestMapping("/user/list/update")
+	public String updateList(Model model, Pageable pageable) {
+		Page<User> users = usersService.getUsers(pageable);
+		model.addAttribute("usersList", users.getContent());
+		return "user/list :: tableUsers";
+	}
 
 }

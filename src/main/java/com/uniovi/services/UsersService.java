@@ -1,5 +1,7 @@
 package com.uniovi.services;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 
@@ -64,7 +66,7 @@ public class UsersService {
 	
 
 	/**
-	 * Comprueba que no si se cambia el id en la url
+	 * Comprueba que si se cambia el id en la url
 	 * solo se muestre aquellas publicaciones de las que es usuario amigo
 	 * @param revised
 	 * @param id
