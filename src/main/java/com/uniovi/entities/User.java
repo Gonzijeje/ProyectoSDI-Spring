@@ -30,6 +30,8 @@ public class User {
 	@JoinTable(name = "amigos", joinColumns = @JoinColumn(name = "amigo_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> amigos = new HashSet<User>();
 	
+	private String role;
+	
 
 	public User(String email, String name, String password) {
 		super();
@@ -111,6 +113,14 @@ public class User {
 
 	public void setPublicaciones(Set<Publicacion> publicaciones) {
 		this.publicaciones = publicaciones;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+	
+	public void setRole(String role) {
+		this.role = role;
 	}
 	
 	

@@ -72,6 +72,12 @@
 						Identificate
 					</a>
 				</li>
+				<li sec:authorize="!isAuthenticated()">
+					<a href="/admin/login">
+						<span class="glyphicon glyphicon-log-in"></span>
+						Identificate como Admin
+					</a>
+				</li>
 				<li sec:authorize="isAuthenticated()">
 					<a href="/logout" th:text="#{disconnect.message}"> 
 						<span class="glyphicon glyphicon-log-out"></span>

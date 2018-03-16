@@ -2,6 +2,8 @@ package com.uniovi.controllers;
 
 import java.util.LinkedList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +44,9 @@ public class UsersControllers {
 	@Autowired
 	private PeticionAmistadService peticionService;
 	
+	@Autowired
+	private HttpSession httpSession;
+	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
 		model.addAttribute("user", new User());
@@ -64,17 +69,34 @@ public class UsersControllers {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
+		httpSession.setAttribute("hola", "user");
 		return "login";
 	}
 	
+	@RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+	public String adminLogin(Model model) {
+		httpSession.setAttribute("hola", "admin");
+		return "admin/login";
+	}
+	
+	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET) 
 	public String home(Model model) { 
-		return "home"; 
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User activeUser = usersService.getUserByEmail(auth.getName());
+		if(activeUser.getRole().equals("ROLE_ADMIN")) {
+			return "redirect:/user/list";
+		}else if(activeUser.getRole().equals("ROLE_USER") && (httpSession.getAttribute("hola").equals("user"))){
+			return "home";
+		}else {
+			return "redirect:/logout";
+		}
+			
 	}
 	
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
-			@RequestParam(value = "", required=false) String searchText){
+			@RequestParam(value = "", required=false) String searchText){		
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
 		if(searchText != null && !searchText.isEmpty()) {
 			users = usersService.searchUserByNameOrEmail(pageable, searchText);
@@ -133,5 +155,7 @@ public class UsersControllers {
 		peticionService.deletePeticion(id);
 		return "redirect:/friendRequest/list";
 	}
+	
+	
 
 }
