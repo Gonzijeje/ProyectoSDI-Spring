@@ -1,12 +1,12 @@
 package com.uniovi.services;
 
 import java.util.Date;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Publicacion;
 import com.uniovi.entities.User;
 
@@ -15,6 +15,9 @@ public class InsertSampleDataService {
 	
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private FriendshipService friendshipService;
 	
 	@Autowired
 	private RolesService rolesService;
@@ -65,21 +68,6 @@ public class InsertSampleDataService {
 		user17.setPassword("123456");
 		User user18 = new User("Fran@uniovi.es", "Francisco", "123456");
 		user18.setPassword("123456");
-		
-		user1.getAmigos().add(user2);
-		user2.getAmigos().add(user1);
-		
-		user1.getAmigos().add(user3);
-		user3.getAmigos().add(user1);
-		
-		user1.getAmigos().add(user4);
-		user4.getAmigos().add(user1);
-
-		user1.getAmigos().add(user5);
-		user5.getAmigos().add(user1);
-//
-		//user1.getAmigos().add(user6);
-		//user6.getAmigos().add(user1);
 
 		user2.getPublicaciones().add(new Publicacion("SDI", "Asifnffkjsadbsadckjbsadc sdklcj sdc "
 				+ "asvvavasdvasdvasdvasdvasdvasdvsdv adv "
@@ -125,10 +113,14 @@ public class InsertSampleDataService {
 		usersService.addUser(user17);
 		usersService.addUser(user18);
 		
-		for(User u:user1.getAmigos()) {
-			System.out.println(u.getEmail());
-		}
-		
+		friendshipService.addFriendship(new Friendship(user1,user2));
+		friendshipService.addFriendship(new Friendship(user2,user1));
+		friendshipService.addFriendship(new Friendship(user1,user3));
+		friendshipService.addFriendship(new Friendship(user3,user1));
+		friendshipService.addFriendship(new Friendship(user1,user4));
+		friendshipService.addFriendship(new Friendship(user4,user1));
+		friendshipService.addFriendship(new Friendship(user1,user5));
+		friendshipService.addFriendship(new Friendship(user5,user1));
 	}
 
 }

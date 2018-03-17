@@ -29,5 +29,8 @@ public class PublicacionService {
 		return publicacionRepository.findPublicacionByUser(email);
 	}
 	
+	public void deletePublicacionByUser(Long id) {
+		publicacionRepository.deletePublicacionByUser(id);
+	}
 
 }

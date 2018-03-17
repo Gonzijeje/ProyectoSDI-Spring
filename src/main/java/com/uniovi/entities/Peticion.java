@@ -55,10 +55,10 @@ public class Peticion {
 		this.aceptada = estado;
 	}
 	
-	public void accept() {
+	/*public void accept() {
 		userEnvia.getAmigos().add(userRecibe);
 		userRecibe.getAmigos().add(userEnvia);
-	}
+	}*/
 
 }
 

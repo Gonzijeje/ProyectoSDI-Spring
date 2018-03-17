@@ -1,10 +1,6 @@
 package com.uniovi.controllers;
 
-import java.security.Principal;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Peticion;
 import com.uniovi.entities.User;
+import com.uniovi.services.FriendshipService;
 import com.uniovi.services.PeticionAmistadService;
+import com.uniovi.services.PublicacionService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -39,13 +38,19 @@ public class UsersControllers {
 	private SignUpFormValidator signUpFormValidator;
 	
 	@Autowired
+	private PeticionAmistadService peticionService;
+	
+	@Autowired
+	private PublicacionService publicacionService;
+	
+	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private FriendshipService friendshipService;
 	
 	@Autowired 
 	private SecurityService securityService;
-	
-	@Autowired
-	private PeticionAmistadService peticionService;
 	
 	@Autowired
 	private HttpSession httpSession;
@@ -98,7 +103,10 @@ public class UsersControllers {
 	}
 
 	@RequestMapping("/user/delete/{id}")
-	public String deleteMark(@PathVariable Long id) {
+	public String deleteUser(@PathVariable Long id) {
+		User user = usersService.getUser(id);
+		publicacionService.deletePublicacionByUser(user.getId());
+		friendshipService.deleteFrienshipByUser(user.getId());
 		usersService.deleteUser(id);
 		return "redirect:/user/list";
 	}
@@ -137,7 +145,7 @@ public class UsersControllers {
 	public String getFriendRequests(Model model, Pageable pageable){
 		Page<Peticion> fr = new PageImpl<Peticion>(new LinkedList<Peticion>());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User userEnvia = usersService.getUserByEmail(auth.getName());
+		//User userEnvia = usersService.getUserByEmail(auth.getName());
 		fr=peticionService.getFriendRequestsByUserEnvia(pageable, auth.getName());
 		
 		model.addAttribute("friendRequestsList", fr.getContent());
@@ -158,9 +166,8 @@ public class UsersControllers {
 	@RequestMapping(value="/friendRequest/{id}/accept", method=RequestMethod.GET)
 	public String acceptFriendRequest(Model model, @PathVariable Long id) {
 		Peticion pa = peticionService.getPeticion(id);
-		User userEnvia = pa.getUserEnvia();
-		//pa.getUserRecibe().getAmigos().add(userEnvia);
-		pa.accept();
+		friendshipService.addFriendship(new Friendship(pa.getUserEnvia(),pa.getUserRecibe()));
+		friendshipService.addFriendship(new Friendship(pa.getUserRecibe(),pa.getUserEnvia()));
 		peticionService.deletePeticion(id);
 		return "redirect:/friendRequest/list";
 	}
