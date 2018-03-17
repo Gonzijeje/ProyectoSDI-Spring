@@ -86,10 +86,10 @@ public class UsersControllers {
 		return "login";
 	}
 	
-	@RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/logearse", method = RequestMethod.GET)
 	public String adminLogin(Model model) {
 		httpSession.setAttribute("hola", "admin");
-		return "admin/login";
+		return "admin/logearse";
 	}
 	
 	
@@ -158,7 +158,7 @@ public class UsersControllers {
 		return "/friendRequest/list";
 	}
 	
-	@RequestMapping(value="/user/{id}/send", method=RequestMethod.GET)
+	@RequestMapping(value="/user/send/{id}", method=RequestMethod.GET)
 	public String sendFriendRequest(Model model, @PathVariable Long id){
 		User userRecibe = usersService.getUser(id);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

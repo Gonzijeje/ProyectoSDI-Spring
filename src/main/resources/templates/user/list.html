@@ -35,7 +35,7 @@
 						<td th:text="${user.email}">Email del usuario</td>
 						<td sec:authorize="hasRole('ROLE_USER')"><div>
 							<div>
-								<a th:href="${'/user/' + user.id + '/send'}">Agregar amigo</a>
+								<a th:id="${user.id}" th:href="${'/user/send/' + user.id }">Agregar amigo</a>
 							</div>						
 							</div></td>
 						<td sec:authorize="hasRole('ROLE_ADMIN')">

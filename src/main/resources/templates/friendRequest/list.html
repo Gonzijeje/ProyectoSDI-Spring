@@ -27,7 +27,7 @@
 						<td th:text="${fr.userEnvia.name}">Nombre del usuario</td>
 						<td><div>
 								<div>
-									<a th:href="${'/friendRequest/' + fr.id + '/accept'}">Aceptar petición</a>
+									<a th:id="${fr.userEnvia.id}" th:href="${'/friendRequest/' + fr.id + '/accept'}">Aceptar petición</a>
 								</div>
 							</div></td>
 					</tr>
