@@ -22,7 +22,7 @@
 		<label class="control-label col-sm-2" for="name" th:text="#{signupName.message}">Nombre:</label>
 		<div class="col-sm-10">
 			<input type="text" class="form-control" name="name"
-				placeholder="Ejemplo: Pedro" required="true" />
+				th:placeholder="#{signupPlaceholderName.message}" required="true" />
 			<span class="text-danger" th:if="${#fields.hasErrors('name')}"
 			th:errors="*{name}"/>
 		</div>
@@ -31,7 +31,7 @@
 		<label class="control-label col-sm-2" for="password" th:text="#{signupPassword.message}">Password:</label>
 		<div class="col-sm-10">
 			<input type="password" class="form-control" name="password"
-				placeholder="Introduzca el Password" />
+				th:placeholder="#{signupPlaceholderPassword.message}" />
 			<span class="text-danger" th:if="${#fields.hasErrors('password')}" 
 			th:errors="*{password}"/>
 		</div>
@@ -40,7 +40,7 @@
 		<label class="control-label col-sm-2" for="passwordConfirm" th:text="#{signupRepeatPassword.message}">Repita el Password:</label>
 		<div class="col-sm-10">
 			<input type="password" class="form-control" name="passwordConfirm"
-				placeholder="Repita el Password" />
+				th:placeholder="#{signupPlaceholderRepeatPassword.message}" />
 			<span class="text-danger" th:if="${#fields.hasErrors('passwordConfirm')}" 
 			th:errors="*{passwordConfirm}"/>
 		</div>

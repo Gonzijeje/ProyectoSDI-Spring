@@ -10,7 +10,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entities.Friendship;
 import com.uniovi.entities.User;
+import com.uniovi.repositories.FriendshipRepository;
 import com.uniovi.repositories.UsersRepository;
 import org.springframework.data.domain.Pageable;
 
@@ -22,6 +24,9 @@ public class UsersService {
 	
 	@Autowired 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private FriendshipRepository friendshipRepository;
 	
 	@PostConstruct
 	public void init() {
@@ -73,10 +78,11 @@ public class UsersService {
 		String email = auth.getName();
 		
 		User userAutenticado = usersRepository.findByEmail(email);
-		User userAmigo = usersRepository.findOne(id);
-		
-		if(userAutenticado.getAmigos().contains(userAmigo)) {
-			return userAmigo;
+		User amigo = usersRepository.findOne(id);
+		amigo = usersRepository.findUsersFriends(userAutenticado.getEmail(), amigo.getEmail());
+
+		if(amigo != null) {
+			return amigo;
 		}
 		return null;
 	}

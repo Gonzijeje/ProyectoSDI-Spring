@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Publicacion;
 import com.uniovi.entities.User;
 import com.uniovi.services.PublicacionService;
@@ -70,6 +71,7 @@ public class PublicacionController {
 			model.addAttribute("listFriends", publicaciones);
 			return "user/publicacionFriend";
 		}
+		System.out.println("Es null");
 		return "redirect:/user/listFriends";
 	}
 

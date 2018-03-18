@@ -5,10 +5,10 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2>Peticiones de Amistad</h2>
+		<h2 th:text="#{friendRequestH2.message}">Peticiones de Amistad</h2>
 		<form class="navbar-form" action="/friendRequest/list">
 		</form>
-		<p>Los usuarios de la red social son los
+		<p th:text="#{friendRequestP.message}">Los usuarios de la red social son los
 			siguientes:</p>
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -27,7 +27,8 @@
 						<td th:text="${fr.userEnvia.name}">Nombre del usuario</td>
 						<td><div>
 								<div>
-									<a th:id="${fr.userEnvia.id}" th:href="${'/friendRequest/' + fr.id + '/accept'}">Aceptar petición</a>
+									<a th:id="${fr.userEnvia.id}" 
+									th:href="${'/friendRequest/' + fr.id + '/accept'}" th:text="#{friendRequestAccept.message}">Aceptar petición</a>
 								</div>
 							</div></td>
 					</tr>

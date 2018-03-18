@@ -14,4 +14,5 @@ public interface FriendshipRepository extends CrudRepository<Friendship, Long>{
 	@Query("DELETE FROM Friendship where user.id=?1 or friend.id=?1")
 	void deleteFriendshipByUser(Long id);
 
+
 }

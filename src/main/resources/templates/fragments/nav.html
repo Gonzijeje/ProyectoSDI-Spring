@@ -26,15 +26,15 @@
 				</li>
 				<li id="publications-menu" class="dropdown" >
 					<a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> Gestión de Publicaciones <span
+					data-toggle="dropdown" href="#" th:text="#{publicationManagement.message}"> Gestión de Publicaciones <span
 						class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="/publicacion/add">Crear publicación</a></li>
-						<li><a href="/publicacion/list">Mostrar Publicaciones</a></li>
+						<li><a href="/publicacion/add" th:text="#{newPublication.message}">Crear publicación</a></li>
+						<li><a href="/publicacion/list" th:text="#{showPublications.message}">Mostrar Publicaciones</a></li>
 					</ul>
 				</li>
-				<li><a href="/friendRequest/list" >Ver peticiones de amistad</a></li>
+				<li><a href="/friendRequest/list" th:text="#{showFriendShipRequest}">Ver peticiones de amistad</a></li>
 			</ul>
 		
 			<ul class="nav navbar-nav navbar-right">
@@ -73,7 +73,7 @@
 					</a>
 				</li>
 				<li sec:authorize="!isAuthenticated()">
-					<a href="/admin/logearse">
+					<a href="/admin/logearse" th:text="#{loginAdmin.message}">
 						<span class="glyphicon glyphicon-log-in"></span>
 						Identificate como Admin
 					</a>

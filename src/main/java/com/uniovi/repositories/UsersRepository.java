@@ -1,4 +1,5 @@
 package com.uniovi.repositories;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.domain.Pageable;
@@ -21,5 +22,8 @@ public interface UsersRepository extends CrudRepository<User, Long>{
 
 	@Query("SELECT u.friend FROM Friendship u WHERE u.user.email=?1")
 	Page<User> findUsersFriendsByEmail(Pageable pageable, String email);
+	
+	@Query("SELECT distinct u.friend FROM Friendship u WHERE u.user.email=?1 AND u.friend.email=?2")
+	User findUsersFriends(String email1, String email2);
 	
 }
