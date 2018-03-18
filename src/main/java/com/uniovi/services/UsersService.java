@@ -28,6 +28,9 @@ public class UsersService {
 	@Autowired
 	private FriendshipRepository friendshipRepository;
 	
+	@Autowired
+	private RolesService rolesService;
+	
 	@PostConstruct
 	public void init() {
 	}
@@ -52,7 +55,12 @@ public class UsersService {
 	}
 		
 	public void deleteUser(Long id) {
-		usersRepository.delete(id);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		
+		User userAutenticado = usersRepository.findByEmail(email);
+		if(userAutenticado.getRole().equals(rolesService.getRoles()[1]))	//Borra si es admin
+			usersRepository.delete(id);
 	}
 	
 	public User getUserByEmail(String email) {

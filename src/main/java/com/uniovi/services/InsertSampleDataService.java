@@ -26,7 +26,7 @@ public class InsertSampleDataService {
 	public void init() {
 		User user1 = new User("pedro@uniovi.es", "Pedro", "123456");
 		user1.setPassword("123456");
-		user1.setRole(rolesService.getRoles()[1]);
+		user1.setRole(rolesService.getRoles()[0]);
 		User user2 = new User("lucas@uniovi.es", "Lucas", "123456");
 		user2.setPassword("123456");
 		user2.setRole(rolesService.getRoles()[0]);
@@ -68,6 +68,7 @@ public class InsertSampleDataService {
 		user17.setPassword("123456");
 		User user18 = new User("Fran@uniovi.es", "Francisco", "123456");
 		user18.setPassword("123456");
+		user18.setRole(rolesService.getRoles()[1]);
 
 		user2.getPublicaciones().add(new Publicacion("SDI", "Asifnffkjsadbsadckjbsadc sdklcj sdc "
 				+ "asvvavasdvasdvasdvasdvasdvasdvsdv adv "
