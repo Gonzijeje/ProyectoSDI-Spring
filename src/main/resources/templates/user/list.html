@@ -33,14 +33,15 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.email}">Email del usuario</td>
-						<td sec:authorize="hasRole('ROLE_USER')"><div>
-							<div>
+						<td><div>
+							<div th:if="${user.validToRequestFriend()}">
 								<a th:id="${user.id}" th:href="${'/user/send/' + user.id }" th:text="#{userListAddFriend}">Agregar amigo</a>
-							</div>						
+							</div>
+													
 							</div></td>
 						<td sec:authorize="hasRole('ROLE_ADMIN')">
 							<div>
-							<div>
+							<div th:if="${user.validToDelete()}">
 								<button type="button" th:id="${'deleteButton' + user.id}" class="btn btn-info" th:text="#{userListDeleteFriend}">Eliminar</button>
 								<script th:inline="javascript">
 									/*<![CDATA[*/

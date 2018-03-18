@@ -15,7 +15,7 @@
 					<tr>
 						<th th:text="#{publicationListTitle.message}">Título</th>
 						<th th:text="#{publicationListDate.message}">Fecha</th>
-						<th class="col-md-1"></th>
+						<th>Imagen</th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -24,8 +24,9 @@
 				</thead>
 				<tbody>
 					<tr th:each="p : ${publicacionesList}">
-						<td th:text="${p.titulo}">Titulo de la publicacion</td>
-						<td th:text="${p.fecha}">Fecha de la publicacion</td>
+						<td style="width:250px"  th:text="${p.titulo}">Titulo de la publicacion</td>
+						<td style="width:250px"  th:text="${p.fecha}">Fecha de la publicacion</td>
+						<td style="width:250px" ><img th:if="${p.file!=null}" th:src="${p.file}">
 					</tr>
 				</tbody>
 			</table>

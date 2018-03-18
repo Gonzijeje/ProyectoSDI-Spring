@@ -22,12 +22,17 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		User user = userRepository.findByEmail(email);
-		
-		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		
-		grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
-		return new org.springframework.security.core.userdetails.User( user.getEmail(), user.getPassword(), grantedAuthorities);		
+		try {
+			User user = userRepository.findByEmail(email);
+			
+			Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+			
+			grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
+			return new org.springframework.security.core.userdetails.User( user.getEmail(), user.getPassword(), grantedAuthorities);
+		}catch (Exception e) {
+			throw new NullPointerException("Error: Email no existe");
+		}
+						
 	}
 
 }

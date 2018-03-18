@@ -5,7 +5,7 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container">
 		<h2 th:text="#{loginAdmin.message}">Identifícate como Administrador</h2>
-		<form class="form-horizontal" method="post" action="/login">
+		<form class="form-horizontal" method="post" action="/admin/logearse">
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="username">Email:</label>
 				<div class="col-sm-10">
@@ -21,6 +21,7 @@
 				</div>
 			</div>
 			<span id="errorLogin" class="text-danger" th:if="${(param.error != null)}" th:text="#{Error.login.userNotExist}">Error al logearse: campos incorrectos</span>
+			<span id="noesadmin" class="text-danger" th:if="${(param.noesadmin != null)}" th:text="#{Error.login.userNotAdmin}"></span>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="submit" class="btn btn-primary">Login</button>

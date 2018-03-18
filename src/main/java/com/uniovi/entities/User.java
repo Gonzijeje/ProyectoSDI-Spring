@@ -5,6 +5,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 @Entity
 public class User {
 	
@@ -122,5 +125,25 @@ public class User {
 		this.role = role;
 	}
 	
+	public boolean validToRequestFriend() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		for(Peticion pe:peticionesRecibidas) {
+			if(pe.getUserEnvia().getEmail().equals(email)) return false;
+		}
+		for(Friendship fr:amigos) {
+			if(fr.getUser().getEmail().equals(email) || fr.getFriend().getEmail().equals(email)) return false;
+		}
+		if(this.email.equals(email)) return false;
+		return true;
+		
+	}
+	
+	public boolean validToDelete() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		if(this.email.equals(email)) return false;
+		return true;
+	}
 	
 }

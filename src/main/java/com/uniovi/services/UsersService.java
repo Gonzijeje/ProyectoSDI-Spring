@@ -10,9 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.uniovi.entities.Friendship;
 import com.uniovi.entities.User;
-import com.uniovi.repositories.FriendshipRepository;
 import com.uniovi.repositories.UsersRepository;
 import org.springframework.data.domain.Pageable;
 
@@ -24,9 +22,6 @@ public class UsersService {
 	
 	@Autowired 
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	@Autowired
-	private FriendshipRepository friendshipRepository;
 	
 	@Autowired
 	private RolesService rolesService;
@@ -59,7 +54,7 @@ public class UsersService {
 		String email = auth.getName();
 		
 		User userAutenticado = usersRepository.findByEmail(email);
-		if(userAutenticado.getRole().equals(rolesService.getRoles()[1]))	//Borra si es admin
+		if(userAutenticado.getRole().equals(rolesService.getRoles()[1]))
 			usersRepository.delete(id);
 	}
 	
@@ -73,7 +68,6 @@ public class UsersService {
 		users = usersRepository.searchByNameOrEmail(pageable, searchText);
 		return users;
 	}
-	
 
 	/**
 	 * Comprueba que si se cambia el id en la url
@@ -83,8 +77,7 @@ public class UsersService {
 	 */
 	public User usuarioAmigo(Long id){
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
-		
+		String email = auth.getName();		
 		User userAutenticado = usersRepository.findByEmail(email);
 		User amigo = usersRepository.findOne(id);
 		amigo = usersRepository.findUsersFriends(userAutenticado.getEmail(), amigo.getEmail());

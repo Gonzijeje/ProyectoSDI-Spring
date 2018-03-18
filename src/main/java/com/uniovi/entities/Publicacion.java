@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
 public class Publicacion {
 	
@@ -16,6 +18,7 @@ public class Publicacion {
 	private String titulo;
 	private String descripcion;
 	private Date fecha;
+	private String file;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -70,6 +73,14 @@ public class Publicacion {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String string) {
+		this.file = string;
 	}
 
 }

@@ -1,5 +1,10 @@
 package com.uniovi.controllers;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,8 +19,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.uniovi.entities.Friendship;
 import com.uniovi.entities.Publicacion;
 import com.uniovi.entities.User;
 import com.uniovi.services.PublicacionService;
@@ -35,16 +41,27 @@ public class PublicacionController {
 	private AddPublicacionFormValidator addPublicacionFormValidator;
 	
 	@RequestMapping(value="/publicacion/add", method=RequestMethod.POST )
-	public String setPublicacion(@Validated Publicacion publicacion, BindingResult result){
+	public String setPublicacion(@Validated Publicacion publicacion, BindingResult result, 
+			@RequestParam("imagen") MultipartFile informe){
 		addPublicacionFormValidator.validate(publicacion, result);
 		if(result.hasErrors()) {
 			return "publicacion/add";
 		}
+		try {
+			String fileName = informe.getOriginalFilename();
+			InputStream is = informe.getInputStream();
+			Files.copy(is, Paths.get("src/main/resources/static/img/"+fileName),
+				StandardCopyOption.REPLACE_EXISTING);
+			publicacion.setFile("/img/"+fileName);
+		}catch (IOException e) {
+			
+		}
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = usersService.getUserByEmail(auth.getName());
 		publicacion.setUser(user); publicacion.setFecha(new Date());
 		publicacionService.addPublicacion(publicacion);
-		return "redirect:/user/list";
+		return "redirect:/publicacion/list";
 	}
 	
 	@RequestMapping(value="/publicacion/add")
@@ -71,7 +88,6 @@ public class PublicacionController {
 			model.addAttribute("listFriends", publicaciones);
 			return "user/publicacionFriend";
 		}
-		System.out.println("Es null");
 		return "redirect:/user/listFriends";
 	}
 

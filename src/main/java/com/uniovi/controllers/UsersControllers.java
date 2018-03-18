@@ -1,8 +1,6 @@
 package com.uniovi.controllers;
 
 import java.util.LinkedList;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,8 +54,6 @@ public class UsersControllers {
 	@Autowired
 	private RolesService rolesService;
 	
-	@Autowired
-	private HttpSession httpSession;
 	
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -82,29 +78,36 @@ public class UsersControllers {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		httpSession.setAttribute("hola", "user");
 		return "login";
 	}
 	
 	@RequestMapping(value = "/admin/logearse", method = RequestMethod.GET)
-	public String adminLogin(Model model) {
-		httpSession.setAttribute("hola", "admin");
+	public String getAdminLogin(Model model) {
 		return "admin/logearse";
+	}
+	
+	@RequestMapping(value = "/admin/logearse", method = RequestMethod.POST)
+	public String adminLogin(@RequestParam String username, @RequestParam String password) {		
+		try {
+			User user=usersService.getUserByEmail(username);
+			if(user.getRole().equals("ROLE_ADMIN")) {
+				try {
+					securityService.autoLogin(username, password);
+					return "redirect:/user/list";
+				}catch (Exception e) {
+					return "redirect:/admin/logearse?error";
+				}
+			}
+		}catch (Exception e){
+			return "redirect:/admin/logearse?noesadmin";
+		}
+		return "redirect:/admin/logearse?noesadmin";		
 	}
 	
 	
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET) 
 	public String home(Model model) { 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User activeUser = usersService.getUserByEmail(auth.getName());
-		if(activeUser.getRole().equals("ROLE_ADMIN")) {
-			return "redirect:/user/list";
-		}else if(activeUser.getRole().equals("ROLE_USER") && (httpSession.getAttribute("hola").equals("user"))){
-			return "home";
-		}else {
-			return "redirect:/logout";
-		}
-			
+		return "home";		
 	}
 
 	@RequestMapping("/user/delete/{id}")
@@ -150,7 +153,6 @@ public class UsersControllers {
 	public String getFriendRequests(Model model, Pageable pageable){
 		Page<Peticion> fr = new PageImpl<Peticion>(new LinkedList<Peticion>());
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//User userEnvia = usersService.getUserByEmail(auth.getName());
 		fr=peticionService.getFriendRequestsByUserEnvia(pageable, auth.getName());
 		
 		model.addAttribute("friendRequestsList", fr.getContent());
