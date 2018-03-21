@@ -37,9 +37,9 @@
 							<div th:if="${user.validToRequestFriend() == 0}">
 								<a th:id="${user.id}" th:href="${'/user/send/' + user.id }" th:text="#{userListAddFriend}">Agregar amigo</a>
 							</div>
-							<div th:if="${user.validToRequestFriend() == 1 }">Solicitud enviada
+							<div th:text="#{userListRequestSent.message}" th:if="${user.validToRequestFriend() == 1 }">Solicitud enviada
 							</div>
-							<div th:if="${user.validToRequestFriend() == 2}"> Amigo
+							<div th:text="#{userListFriend.message}" th:if="${user.validToRequestFriend() == 2}"> Amigo
 							</div>
 							
 													
