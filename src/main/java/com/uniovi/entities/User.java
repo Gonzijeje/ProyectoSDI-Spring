@@ -125,17 +125,17 @@ public class User {
 		this.role = role;
 	}
 	
-	public boolean validToRequestFriend() {
+	public int validToRequestFriend() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
+		if(this.email.equals(email)) return 3;
 		for(Peticion pe:peticionesRecibidas) {
-			if(pe.getUserEnvia().getEmail().equals(email)) return false;
+			if(pe.getUserEnvia().getEmail().equals(email)) return 1;
 		}
 		for(Friendship fr:amigos) {
-			if(fr.getUser().getEmail().equals(email) || fr.getFriend().getEmail().equals(email)) return false;
+			if(fr.getUser().getEmail().equals(email) || fr.getFriend().getEmail().equals(email)) return 2;
 		}
-		if(this.email.equals(email)) return false;
-		return true;
+		return 0;
 		
 	}
 	
