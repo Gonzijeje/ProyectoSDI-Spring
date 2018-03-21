@@ -166,7 +166,7 @@ public class UsersControllers {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User userEnvia = usersService.getUserByEmail(auth.getName());
 		
-		peticionService.addPeticion(new Peticion(userEnvia,userRecibe,false));
+		peticionService.addPeticion(new Peticion(userEnvia,userRecibe));
 		return "redirect:/user/list";
 	}
 	

@@ -19,13 +19,11 @@ public class Peticion {
 	@JoinColumn(name = "user_recibe")
 	private User userRecibe;
 	
-	private boolean aceptada; //True(aceptada)
 	
-	public Peticion(User envia,User recibe,boolean estado) {
+	public Peticion(User envia,User recibe) {
 		super();
 		this.userEnvia=envia;
 		this.userRecibe=recibe;
-		this.aceptada=estado;
 	}
 
 	public Peticion() {	
@@ -45,20 +43,7 @@ public class Peticion {
 
 	public void setUserRecibe(User userRecibe) {
 		this.userRecibe = userRecibe;
-	}
-
-	public boolean isAceptada() {
-		return aceptada;
-	}
-
-	public void setAceptada(boolean estado) {
-		this.aceptada = estado;
-	}
-	
-	/*public void accept() {
-		userEnvia.getAmigos().add(userRecibe);
-		userRecibe.getAmigos().add(userEnvia);
-	}*/
+	}	
 
 }
 
